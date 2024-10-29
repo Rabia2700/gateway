@@ -1,0 +1,57 @@
+spring:
+  cloud:
+    gateway:
+      x-forwarded:
+        enabled: true
+        for-enabled: true
+        for-append: true
+        proto-enabled: false
+        host-enabled: false
+        port-enabled: false
+      routes:
+        - id: front_end_route
+          uri: lb://fakefrontEndServer
+          predicates:
+            - Path=/front-end/**
+        - id: oauth
+          uri: lb://oauth
+          predicates:
+            - Path=/oauth/**
+        - id: users
+          uri: lb://users
+          predicates:
+            - Path=/api/users-management/**
+        - id: gestInterventionBelomWafo
+          uri: lb://gestInterventionBelomWafo
+          predicates:
+            - Path=/api/interventions/**
+        - id: gestNote
+          uri: lb://gestNote
+          predicates:
+            - Path=/api/gest-note/**
+        - id: trombinoscope
+          uri: lb://trombinoscope
+          predicates:
+            - Path=/api/trombinoscope/**
+#      default-filters:
+#        - name: ExNonRegistApp
+#          args:
+#            regexp: "/(?<segment>.*)"
+#            replacement: "/${segment}"
+#        - name: RequestRateLimiter
+#          args:
+#            key-resolver: "#{@userRemoteAddressResolver}"
+#            redis-rate-limiter.replenishRate: 1
+#            redis-rate-limiter.burstCapacity: 1
+
+
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVICE_URL:http://localhost:5000}/eureka/ #IDE
+#       defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8080}/discovery/eureka/
