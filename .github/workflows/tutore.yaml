@@ -22,7 +22,9 @@ jobs:
       run: mvn clean install 
 
     - name: Executer les tests
-      run: ./mvnw test  # Exécute les tests unitaires
+      run: mvn test  # Exécute les tests unitaires
+
+    
 
     
     
